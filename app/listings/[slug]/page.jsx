@@ -30,8 +30,10 @@ export async function generateMetadata({ params }) {
 
 async function getData(slug) {
   const base =
-    typeof window === "undefined" && process.env.NEXT_PUBLIC_VERCEL_URL
-      ? `https://${process.env.NEXT_PUBLIC_VERCEL_URL}`
+    typeof window === "undefined"
+      ? process.env.NEXT_PUBLIC_VERCEL_URL
+        ? `https://${process.env.NEXT_PUBLIC_VERCEL_URL}`
+        : 'http://localhost:3000'
       : ""
   const res = await fetch(`${base}/api/listings?slug=${encodeURIComponent(slug)}`, { cache: "no-store" })
   if (!res.ok) return null
