@@ -1,12 +1,14 @@
 import { notFound } from "next/navigation"
 import Link from "next/link"
+import { headers } from "next/headers"
 import { ArrowLeft, Calendar, Clock, User, Share2, Facebook, Twitter, Instagram } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { Card, CardContent } from "@/components/ui/card"
 
 async function getPost(slug) {
-  const res = await fetch(`${process.env.NEXT_PUBLIC_VERCEL_URL ? `https://${process.env.NEXT_PUBLIC_VERCEL_URL}` : 'http://localhost:3000'}/api/blog`, { cache: "no-store" })
+  const baseUrl = process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : 'http://localhost:3002'
+  const res = await fetch(`${baseUrl}/api/blog`, { cache: "no-store" })
   if (!res.ok) return null
   const data = await res.json()
   return data.posts?.find(p => p.slug === slug) || null
