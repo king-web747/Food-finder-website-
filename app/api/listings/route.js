@@ -179,6 +179,8 @@ const MOCK = [
   },
 ]
 
+import { NextResponse } from 'next/server'
+
 export async function GET(req) {
   const { searchParams } = new URL(req.url)
   const slug = searchParams.get("slug")
@@ -196,7 +198,7 @@ export async function GET(req) {
   // Single listing by slug
   if (slug) {
     const single = MOCK.filter((i) => i.slug === slug)
-    return Response.json({ items: single })
+    return NextResponse.json({ items: single })
   }
 
   let items = [...MOCK]
@@ -228,5 +230,5 @@ export async function GET(req) {
     items.sort((a, b) => (b.priceLevel || 1) - (a.priceLevel || 1))
   }
 
-  return Response.json({ items })
+  return NextResponse.json({ items })
 }
